@@ -1,0 +1,31 @@
+{
+  "name": "geneo-server",
+  "version": "0.0.0",
+  "description": "geneo-server, api for geneo project",
+  "main": "index.ts",
+  "repository": "https://github.com/VadLogan/geneo-server.git",
+  "author": "vadjs <palkinvadim@mail.ru>",
+  "license": "MIT",
+  "scripts": {
+    "ts:build": "tsc",
+    "build": "npm run ts:build",
+    "prod:serve": "node dist/index.js",
+    "watch-server": "cross-env NODE_ENV=development  nodemon --watch './src/**/*' -e ts,tsx --exec ts-node ./src/index.ts",
+    "start": "npm run build && npm run prod:serve"
+  },
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.48",
+    "@types/koa-bodyparser": "^4.2.2",
+    "@types/koa-router": "^7.0.40",
+    "cross-env": "^5.2.0",
+    "nodemon": "^1.18.11",
+    "ts-node": "^8.0.3",
+    "tslint": "^5.15.0",
+    "typescript": "^3.4.3"
+  }
+}
