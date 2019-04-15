@@ -1,5 +1,6 @@
 import * as Koa from "koa";
 import * as bodyParser from "koa-bodyparser";
+import * as pg from "pg";
 import config from "./config";
 import router from "./routes";
 
@@ -14,8 +15,32 @@ app.use(
 );
 
 app.use(router.routes());
+app.use(router.allowedMethods());
 
-const { PORT } = config;
+const { PORT, DB } = config;
+const { Pool, Client } = pg;
+
+const pool = new Pool({
+  connectionString: DB
+});
+
+pool.query("SELECT NOW()", async (err, res) => {
+  console.log(err, res, "pool");
+  await pool.end();
+});
+
+const client = new Client({
+  connectionString: DB
+});
+
+const pgsl = (async () => {
+  await client.connect();
+})();
+
+client.query("SELECT NOW()", async (err, res) => {
+  console.log(err, res, "client");
+  await client.end();
+});
 
 app.listen(PORT);
 
